@@ -4,6 +4,7 @@ import com.ahmadcode.abousamrashops.dto.OrderDto;
 import com.ahmadcode.abousamrashops.exception.ResourceNotFoundException;
 import com.ahmadcode.abousamrashops.model.Order;
 import com.ahmadcode.abousamrashops.response.ApiResponse;
+import com.ahmadcode.abousamrashops.service.Idempontency.IdempotencyService;
 import com.ahmadcode.abousamrashops.service.order.IOrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
+    private IdempotencyService idempotencyService;
+    @Autowired
     private IOrderService orderService;
 
 
     @PostMapping("/order")
-    public ResponseEntity<ApiResponse> createOrder(@RequestParam Long userId){
+    public ResponseEntity<ApiResponse> createOrder(@RequestHeader("Idempotency-Key") String key,@RequestParam Long userId){
         try{
             Order order = orderService.placeOrder(userId);
             OrderDto orderDto = orderService.convertToDto(order);
