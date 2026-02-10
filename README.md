@@ -33,3 +33,21 @@ This project demonstrates real-world backend development practices including aut
 
 ## 🧩 Project Structure
 
+src/
+├── controller # REST controllers
+├── service # Business logic
+├── repository # JPA repositories
+├── model # Entities
+├── dto # Data Transfer Objects
+├── security # JWT & Spring Security configuration
+└── exception # Global exception handling
+
+
+---
+
+## 🔐 Authentication Flow
+
+1. User registers or logs in
+2. Server generates a **JWT token**
+3. Client sends the token in the `Authorization` header
+4. Spring Security validates the token for protected endpoints
